@@ -14,12 +14,12 @@ class PegawaiController extends Controller
         return view('admin.pegawai.index-pegawai-admin', compact('pegawai'));
     }
 
-    public function create()
+    public function viewTambahPegawai()
     {
         return view('admin.pegawai.tambah-pegawai-admin');
     }
 
-    public function store(Request $request)
+    public function storeTambahPegawai(Request $request)
     {
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
@@ -33,13 +33,13 @@ class PegawaiController extends Controller
         return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
-    public function edit($id_pegawai)
+    public function viewEditPegawai($id_pegawai)
     {
         $pegawai = Pegawai::findOrFail($id_pegawai);
         return view('admin.pegawai.edit-pegawai-admin', compact('pegawai'));
     }
 
-    public function update(Request $request, $id_pegawai)
+    public function storeEditPegawai(Request $request, $id_pegawai)
     {
         $pegawai = Pegawai::findOrFail($id_pegawai);
 

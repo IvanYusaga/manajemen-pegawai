@@ -17,10 +17,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('dashboard.admin');
 
     Route::get('/admin/pegawai', [PegawaiController::class, 'index'])->name('admin.pegawai.index');
-    Route::get('/admin/pegawai/tambah-pegawai', [PegawaiController::class, 'create'])->name('admin.pegawai.create');
-    Route::post('/admin/pegawai/tambah-pegawai', [PegawaiController::class, 'store'])->name('admin.pegawai.store');
-    Route::get('/admin/pegawai/edit/{id_pegawai}', [PegawaiController::class, 'edit'])->name('admin.pegawai.edit');
-    Route::post('/admin/pegawai/update/{id_pegawai}', [PegawaiController::class, 'update'])->name('admin.pegawai.update');
+    Route::get('/admin/pegawai/tambah-pegawai', [PegawaiController::class, 'viewTambahPegawai'])->name('admin.pegawai.create');
+    Route::post('/admin/pegawai/tambah-pegawai', [PegawaiController::class, 'storeTambahPegawai'])->name('admin.pegawai.store');
+    Route::get('/admin/pegawai/edit/{id_pegawai}', [PegawaiController::class, 'viewEditPegawai'])->name('admin.pegawai.edit');
+    Route::post('/admin/pegawai/update/{id_pegawai}', [PegawaiController::class, 'storeEditPegawai'])->name('admin.pegawai.update');
     Route::delete('/admin/pegawai/hapus/{id_pegawai}', [PegawaiController::class, 'storeHapusPegawai'])->name('admin.pegawai.destroy');
 });
 
