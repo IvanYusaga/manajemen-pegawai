@@ -2,6 +2,7 @@
 
 use App\Http\AuthController;
 use App\Http\Controllers\Admin\PegawaiController;
+use App\Http\Controllers\Admin\DashboardAdminController;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -13,9 +14,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard-admin');
-    })->name('dashboard.admin');
+    Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('dashboard.admin');
 
     Route::get('/admin/pegawai', [PegawaiController::class, 'index'])->name('admin.pegawai.index');
     Route::get('/admin/pegawai/tambah-pegawai', [PegawaiController::class, 'create'])->name('admin.pegawai.create');
