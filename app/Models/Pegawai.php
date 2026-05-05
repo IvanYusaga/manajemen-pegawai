@@ -22,18 +22,9 @@ class Pegawai extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
         'nama',
         'jenis_kelamin',
         'pendidikan',
         'tanggal_lahir',
     ];
-
-    /**
-     * Get the user that owns the pegawai.
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
