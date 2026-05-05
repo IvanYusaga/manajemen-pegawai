@@ -9,7 +9,7 @@
 @section('content')
     <div class="mb-4">
         <a href="{{ route('admin.pegawai.index') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-semibold bg-white border border-base-border text-base-text hover:bg-slate-100 transition-all">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <img src="{{ asset('style/assets/img/kembali-icon.png') }}" alt="Kembali" class="w-5 h-5 object-contain">
             Kembali
         </a>
     </div>
