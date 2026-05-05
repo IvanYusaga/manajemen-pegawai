@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -44,7 +43,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial yang Anda berikan tidak cocok dengan data kami.',
+            'email' => 'email atau password salah.',
         ])->onlyInput('email');
     }
 

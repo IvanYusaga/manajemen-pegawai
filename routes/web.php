@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 
