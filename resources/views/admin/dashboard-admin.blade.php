@@ -3,79 +3,75 @@
 @section('title', 'Dashboard Admin')
 
 @section('content')
-<div class="page-container">
-    <div class="welcome-section">
-        <h1>Dashboard Statistik Pegawai 👋</h1>
-        <p>Monitor komposisi pegawai berdasarkan jenis kelamin secara real-time.</p>
+<div class="p-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold tracking-tight">Dashboard Statistik Pegawai 👋</h1>
+        <p class="text-base-muted">Monitor komposisi pegawai berdasarkan jenis kelamin secara real-time.</p>
     </div>
 
-    <div class="content-grid">
-        <div class="card" style="grid-column: span 2;">
-            <div class="card-header">
-                <h2>Statistik Jenis Kelamin</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 bg-white rounded-2xl border border-base-border shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-base-border">
+                <h2 class="text-lg font-semibold">Statistik Jenis Kelamin</h2>
             </div>
-            <div class="chart-container" style="height: 400px; padding: 20px;">
+            <div class="p-6 h-[400px]">
                 <canvas id="genderChart"></canvas>
             </div>
         </div>
         
-        <div class="card">
-            <div class="card-header">
-                <h2>Ringkasan Data</h2>
+        <div class="bg-white rounded-2xl border border-base-border shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-base-border">
+                <h2 class="text-lg font-semibold">Ringkasan Data</h2>
             </div>
-            <div style="padding: 24px;">
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; border: 1px solid rgba(99, 102, 241, 0.2);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 12px; height: 12px; background: #6366f1; border-radius: 3px;"></div>
-                            <span style="font-weight: 600; color: var(--text-main);">Laki-laki</span>
-                        </div>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: #6366f1;">{{ $lakiLaki }}</span>
+            <div class="p-6 space-y-5">
+                <div class="flex justify-between items-center p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-indigo-500 rounded-full"></div>
+                        <span class="font-semibold">Laki-laki</span>
                     </div>
-                    
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(236, 72, 153, 0.1); border-radius: 12px; border: 1px solid rgba(236, 72, 153, 0.2);">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 12px; height: 12px; background: #ec4899; border-radius: 3px;"></div>
-                            <span style="font-weight: 600; color: var(--text-main);">Perempuan</span>
-                        </div>
-                        <span style="font-size: 1.25rem; font-weight: 700; color: #ec4899;">{{ $perempuan }}</span>
+                    <span class="text-2xl font-bold text-indigo-600">{{ $lakiLaki }}</span>
+                </div>
+                
+                <div class="flex justify-between items-center p-4 bg-rose-50 border border-rose-100 rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 bg-rose-500 rounded-full"></div>
+                        <span class="font-semibold">Perempuan</span>
                     </div>
+                    <span class="text-2xl font-bold text-rose-600">{{ $perempuan }}</span>
+                </div>
 
-                    <div style="margin-top: 10px; padding-top: 20px; border-top: 1px border-dashed #e2e8f0;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                            <span style="color: var(--text-muted);">Total Pegawai</span>
-                            <span style="font-weight: 600;">{{ $lakiLaki + $perempuan }}</span>
-                        </div>
-                        <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden; display: flex;">
-                            @php
-                                $total = $lakiLaki + $perempuan;
-                                $pLaki = $total > 0 ? ($lakiLaki / $total) * 100 : 0;
-                                $pPerempuan = $total > 0 ? ($perempuan / $total) * 100 : 0;
-                            @endphp
-                            <div style="width: {{ $pLaki }}%; background: #6366f1;"></div>
-                            <div style="width: {{ $pPerempuan }}%; background: #ec4899;"></div>
-                        </div>
+                <div class="mt-2 pt-5 border-t border-dashed border-base-border">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-base-muted text-sm font-medium">Total Pegawai</span>
+                        <span class="font-bold">{{ $lakiLaki + $perempuan }}</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden flex">
+                        @php
+                            $total = $lakiLaki + $perempuan;
+                            $pLaki = $total > 0 ? ($lakiLaki / $total) * 100 : 0;
+                            $pPerempuan = $total > 0 ? ($perempuan / $total) * 100 : 0;
+                        @endphp
+                        <div class="h-full bg-indigo-500" style="width: {{ $pLaki }}%"></div>
+                        <div class="h-full bg-rose-500" style="width: {{ $pPerempuan }}%"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Age Distribution Card -->
-        <div class="card" style="grid-column: span 3;">
-            <div class="card-header">
-                <h2>Statistik Umur Pegawai</h2>
+        <div class="lg:col-span-3 bg-white rounded-2xl border border-base-border shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-base-border">
+                <h2 class="text-lg font-semibold">Statistik Umur Pegawai</h2>
             </div>
-            <div class="chart-container" style="height: 400px; padding: 20px;">
+            <div class="p-6 h-[400px]">
                 <canvas id="ageChart"></canvas>
             </div>
         </div>
 
-        <!-- Education Distribution Card -->
-        <div class="card" style="grid-column: span 3;">
-            <div class="card-header">
-                <h2>Statistik Pendidikan Pegawai</h2>
+        <div class="lg:col-span-3 bg-white rounded-2xl border border-base-border shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-base-border">
+                <h2 class="text-lg font-semibold">Statistik Pendidikan Pegawai</h2>
             </div>
-            <div class="chart-container" style="height: 400px; padding: 20px;">
+            <div class="p-6 h-[400px]">
                 <canvas id="educationChart"></canvas>
             </div>
         </div>

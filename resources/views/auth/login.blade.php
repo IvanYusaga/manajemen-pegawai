@@ -13,76 +13,62 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        body {
-            font-family: 'Instrument Sans', sans-serif;
-        }
-        .login-card {
-            backdrop-filter: blur(8px);
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        input:focus {
-            box-shadow: 0 0 0 2px rgba(245, 48, 3, 0.1);
-        }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC] min-h-screen flex flex-col items-center justify-center p-6 antialiased">
+<body class="bg-base-bg text-base-text min-h-screen flex flex-col items-center justify-center p-6 antialiased font-sans">
     
     <div class="w-full max-w-[420px]">
         <!-- Logo/Brand -->
-        <div class="mb-10 text-center">
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#f53003] text-white shadow-lg mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="mb-10 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary text-white shadow-lg shadow-indigo-100 mb-5 transition-transform hover:rotate-3">
+                <i data-lucide="layout-dashboard" class="w-7 h-7"></i>
             </div>
-            <h1 class="text-2xl font-semibold tracking-tight">Manajemen Pegawai</h1>
-            <p class="text-[#706f6c] dark:text-[#A1A09A] mt-1 text-sm">Masuk untuk mengelola data pegawai Anda</p>
+            <h1 class="text-3xl font-bold tracking-tight">HRPulse</h1>
+            <p class="text-base-muted mt-2 text-sm">Masuk untuk mengelola data pegawai Anda</p>
         </div>
 
         <!-- Login Card -->
-        <div class="login-card bg-white dark:bg-[#161615] border border-[#e3e3e0] dark:border-[#3E3E3A] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] rounded-2xl p-8 md:p-10 transition-all duration-300">
+        <div class="bg-white border border-base-border shadow-xl shadow-slate-200/50 rounded-3xl p-8 md:p-10 animate-in fade-in slide-in-from-bottom-8 duration-1000">
             
             <form method="POST" action="{{ route('store.login') }}" class="space-y-6">
                 @csrf
 
                 <!-- Email Address -->
                 <div class="space-y-2">
-                    <label for="email" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                        Email
-                    </label>
+                    <label for="email" class="text-sm font-semibold ml-1">Email</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
-                        class="flex h-11 w-full rounded-lg border border-[#e3e3e0] dark:border-[#3E3E3A] bg-[#FDFDFC] dark:bg-[#0a0a0a] px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#A1A09A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f53003] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
-                        placeholder="name@company.com">
+                        class="flex h-12 w-full rounded-xl border border-base-border bg-white px-4 py-2 text-[0.95rem] placeholder:text-base-muted focus:outline-none focus:ring-4 focus:ring-indigo-50 focus:border-primary transition-all"
+                        placeholder="admin@hrpulse.id">
                     @error('email')
-                        <p class="text-[13px] text-[#f53003] font-medium mt-1">{{ $message }}</p>
+                        <p class="text-xs text-red-500 font-medium mt-1 ml-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Password -->
                 <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                            Kata Sandi
-                        </label>
-                    </div>
+                    <label for="password" class="text-sm font-semibold ml-1">Kata Sandi</label>
                     <input id="password" type="password" name="password" required
-                        class="flex h-11 w-full rounded-lg border border-[#e3e3e0] dark:border-[#3E3E3A] bg-[#FDFDFC] dark:bg-[#0a0a0a] px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[#A1A09A] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f53003] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all"
+                        class="flex h-12 w-full rounded-xl border border-base-border bg-white px-4 py-2 text-[0.95rem] placeholder:text-base-muted focus:outline-none focus:ring-4 focus:ring-indigo-50 focus:border-primary transition-all"
                         placeholder="••••••••">
                     @error('password')
-                        <p class="text-[13px] text-[#f53003] font-medium mt-1">{{ $message }}</p>
+                        <p class="text-xs text-red-500 font-medium mt-1 ml-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <!-- Login Button -->
                 <button type="submit"
-                    class="inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f53003] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#1b1b18] dark:bg-[#eeeeec] text-white dark:text-[#1C1C1A] hover:bg-black dark:hover:bg-white h-11 px-4 py-2 w-full shadow-sm active:scale-[0.98]">
-                    Masuk
+                    class="inline-flex items-center justify-center rounded-xl text-[0.95rem] font-bold bg-primary text-white hover:bg-primary-hover h-12 px-4 py-2 w-full shadow-lg shadow-indigo-100 transition-all active:scale-[0.98] mt-2">
+                    Masuk ke Dashboard
                 </button>
             </form>
         </div>
     </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 
 </body>
 </html>
