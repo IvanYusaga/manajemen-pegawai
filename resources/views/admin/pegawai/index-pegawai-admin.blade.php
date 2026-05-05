@@ -105,8 +105,73 @@
     .pagination-wrapper {
         padding: 20px 24px;
         border-top: 1px solid var(--border-color);
+    }
+
+    /* Fix oversized pagination buttons */
+    .pagination-wrapper nav {
         display: flex;
-        justify-content: flex-end;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pagination-wrapper nav svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .pagination-wrapper .hidden.sm\:flex-1 {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .pagination-wrapper .hidden.sm\:flex-1 > div:first-child {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .pagination-wrapper .relative.z-0 {
+        display: inline-flex;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .pagination-wrapper .relative.z-0 span,
+    .pagination-wrapper .relative.z-0 a {
+        padding: 8px 16px;
+        background: white;
+        border: none;
+        border-right: 1px solid var(--border-color);
+        color: var(--text-main);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .pagination-wrapper .relative.z-0 span:last-child,
+    .pagination-wrapper .relative.z-0 a:last-child {
+        border-right: none;
+    }
+
+    .pagination-wrapper .relative.z-0 a:hover {
+        background: #f8fafc;
+        color: var(--primary);
+    }
+
+    .pagination-wrapper .relative.z-0 span[aria-current="page"] {
+        background: var(--primary);
+        color: white;
+    }
+
+    /* Hide mobile view text elements that might clutter */
+    .pagination-wrapper nav > div:first-child {
+        display: none;
     }
 </style>
 @endpush
