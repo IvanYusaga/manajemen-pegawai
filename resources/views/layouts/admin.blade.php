@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="icon" type="image/png" href="{{ asset('style/assets/img/icon-logo.png') }}">
     <style>
         [x-cloak] { display: none !important; }
     </style>
@@ -20,56 +21,39 @@
     <!-- Sidebar -->
     <aside class="sidebar fixed left-0 top-0 bottom-0 w-sidebar bg-base-surface border-r border-base-border flex flex-col z-50 transition-transform duration-300 md:translate-x-0 -translate-x-full">
         <div class="p-6 flex items-center gap-3">
-            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-            </div>
+            <img src="{{ asset('style/assets/img/icon-logo.png') }}" alt="Logo" class="w-8 h-8 object-contain">
             <span class="font-bold text-lg tracking-tight">HRPulse</span>
         </div>
 
         <nav class="px-4 mt-5 flex-grow">
             <div class="mb-1">
                 <a href="{{ route('dashboard.admin') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-[0.95rem] transition-all duration-200 {{ request()->routeIs('dashboard.admin') ? 'bg-indigo-50 text-primary' : 'text-base-muted hover:bg-slate-100 hover:text-primary' }}">
-                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <img src="{{ asset('style/assets/img/dashboard-icon.png') }}" alt="Dashboard" class="w-5 h-5 object-contain">
                     Dashboard
                 </a>
             </div>
             <div class="mb-1">
                 <a href="{{ route('admin.pegawai.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-[0.95rem] transition-all duration-200 {{ request()->routeIs('admin.pegawai.*') ? 'bg-indigo-50 text-primary' : 'text-base-muted hover:bg-slate-100 hover:text-primary' }}">
-                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <img src="{{ asset('style/assets/img/pegawai-icon.png') }}" alt="Dashboard" class="w-5 h-5 object-contain">
                     Pegawai
                 </a>
             </div>
         </nav>
 
-        <div class="p-5 border-t border-base-border">
-            <div class="flex items-center gap-3 p-2 rounded-xl cursor-pointer transition-all duration-200 hover:bg-slate-100">
-                <img src="https://ui-avatars.com/api/?name=Admin+Ivan&background=6366f1&color=fff" alt="Avatar" class="w-10 h-10 rounded-full bg-slate-200 object-cover">
-                <div class="flex flex-col">
-                    <span class="text-[0.9rem] font-semibold">Admin Ivan</span>
-                    <span class="text-[0.75rem] text-base-muted">Super Admin</span>
-                </div>
-            </div>
-        </div>
     </aside>
 
     <!-- Main Content -->
     <main class="md:ml-sidebar min-h-screen pb-10">
-        @yield('content')
+        <div class="p-8">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold tracking-tight">@yield('title')</h1>
+                @yield('subtitle')
+            </div>
+
+            @yield('content')
+        </div>
     </main>
 
-    <script>
-        lucide.createIcons();
-
-        // Mobile Menu Toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.querySelector('.sidebar');
-        
-        if (menuToggle) {
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-            });
-        }
-    </script>
     @stack('scripts')
 </body>
 </html>

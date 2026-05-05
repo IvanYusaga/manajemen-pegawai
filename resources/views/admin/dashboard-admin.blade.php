@@ -2,20 +2,29 @@
 
 @section('title', 'Dashboard Admin')
 
-@section('content')
-<div class="p-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold tracking-tight">Dashboard Statistik Pegawai 👋</h1>
-        <p class="text-base-muted">Monitor komposisi pegawai berdasarkan jenis kelamin secara real-time.</p>
-    </div>
+@section('subtitle')
+<p class="text-base-muted">Monitor Statistik Pegawai.</p>
+@endsection
 
+@section('content')
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 bg-white rounded-2xl border border-base-border shadow-sm overflow-hidden">
             <div class="px-6 py-5 border-b border-base-border">
                 <h2 class="text-lg font-semibold">Statistik Jenis Kelamin</h2>
             </div>
             <div class="p-6 h-[400px]">
-                <canvas id="genderChart"></canvas>
+                <div class="flex items-end justify-around h-full gap-8 pt-10 px-10">
+                    <div class="flex flex-col items-center gap-4 flex-1 h-full justify-end">
+                        <div class="w-24 bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-2xl transition-all duration-700 shadow-lg shadow-indigo-100" style="height: {{ $pLaki }}%"></div>
+                        <span class="text-sm font-bold text-indigo-700">Laki-laki</span>
+                        <span class="text-xs text-base-muted font-medium">{{ $lakiLaki }} Pegawai</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-4 flex-1 h-full justify-end">
+                        <div class="w-24 bg-gradient-to-t from-rose-600 to-rose-400 rounded-t-2xl transition-all duration-700 shadow-lg shadow-rose-100" style="height: {{ $pPerempuan }}%"></div>
+                        <span class="text-sm font-bold text-rose-700">Perempuan</span>
+                        <span class="text-xs text-base-muted font-medium">{{ $perempuan }} Pegawai</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -43,14 +52,9 @@
                 <div class="mt-2 pt-5 border-t border-dashed border-base-border">
                     <div class="flex justify-between mb-2">
                         <span class="text-base-muted text-sm font-medium">Total Pegawai</span>
-                        <span class="font-bold">{{ $lakiLaki + $perempuan }}</span>
+                        <span class="font-bold">{{ $total }}</span>
                     </div>
                     <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden flex">
-                        @php
-                            $total = $lakiLaki + $perempuan;
-                            $pLaki = $total > 0 ? ($lakiLaki / $total) * 100 : 0;
-                            $pPerempuan = $total > 0 ? ($perempuan / $total) * 100 : 0;
-                        @endphp
                         <div class="h-full bg-indigo-500" style="width: {{ $pLaki }}%"></div>
                         <div class="h-full bg-rose-500" style="width: {{ $pPerempuan }}%"></div>
                     </div>
@@ -63,7 +67,22 @@
                 <h2 class="text-lg font-semibold">Statistik Umur Pegawai</h2>
             </div>
             <div class="p-6 h-[400px]">
-                <canvas id="ageChart"></canvas>
+                <div class="flex items-end h-full gap-3 pt-10 overflow-x-auto pb-4 px-2">
+                    @forelse($ageDistribution as $data)
+                        <div class="flex flex-col items-center gap-3 min-w-[50px] flex-1 h-full justify-end group">
+                            <div class="w-full bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-t-xl transition-all duration-500 relative shadow-md shadow-emerald-50 hover:-translate-y-1 hover:shadow-lg" 
+                                style="height: {{ ($data->count / $maxAgeCount) * 100 }}%">
+                                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[11px] px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 whitespace-nowrap">
+                                    {{ $data->count }} Pegawai
+                                    <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45"></div>
+                                </div>
+                            </div>
+                            <span class="text-[11px] text-base-muted font-bold whitespace-nowrap">{{ $data->age }} Thn</span>
+                        </div>
+                    @empty
+                        <div class="w-full h-full flex items-center justify-center text-base-muted">Tidak ada data</div>
+                    @endforelse
+                </div>
             </div>
         </div>
 
@@ -72,172 +91,23 @@
                 <h2 class="text-lg font-semibold">Statistik Pendidikan Pegawai</h2>
             </div>
             <div class="p-6 h-[400px]">
-                <canvas id="educationChart"></canvas>
+                <div class="flex items-end h-full gap-6 pt-10 overflow-x-auto pb-4 px-2">
+                    @forelse($educationDistribution as $data)
+                        <div class="flex flex-col items-center gap-3 min-w-[80px] flex-1 h-full justify-end group">
+                            <div class="w-full bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-xl transition-all duration-500 relative shadow-md shadow-indigo-50 hover:-translate-y-1 hover:shadow-lg" 
+                                style="height: {{ ($data->count / $maxEduCount) * 100 }}%">
+                                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[11px] px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-xl z-10 whitespace-nowrap">
+                                    {{ $data->count }} Pegawai
+                                    <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45"></div>
+                                </div>
+                            </div>
+                            <span class="text-[11px] text-base-muted font-bold whitespace-nowrap">{{ $data->pendidikan }}</span>
+                        </div>
+                    @empty
+                        <div class="w-full h-full flex items-center justify-center text-base-muted">Tidak ada data</div>
+                    @endforelse
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
-
-@push('scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('genderChart').getContext('2d');
-        
-        // Create gradient
-        const blueGradient = ctx.createLinearGradient(0, 0, 0, 400);
-        blueGradient.addColorStop(0, '#6366f1');
-        blueGradient.addColorStop(1, '#818cf8');
-        
-        const pinkGradient = ctx.createLinearGradient(0, 0, 0, 400);
-        pinkGradient.addColorStop(0, '#ec4899');
-        pinkGradient.addColorStop(1, '#f472b6');
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Laki-laki', 'Perempuan'],
-                datasets: [{
-                    label: 'Jumlah Pegawai',
-                    data: [{{ $lakiLaki }}, {{ $perempuan }}],
-                    backgroundColor: [blueGradient, pinkGradient],
-                    borderRadius: 8,
-                    borderSkipped: false,
-                    barThickness: 60,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleFont: { size: 14, weight: 'bold' },
-                        bodyFont: { size: 13 },
-                        cornerRadius: 8,
-                        displayColors: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            color: '#64748b'
-                        },
-                        grid: {
-                            color: '#f1f5f9',
-                            drawBorder: false
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: '#64748b',
-                            font: { weight: '600' }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-
-        // Age Distribution Chart
-        const ageCtx = document.getElementById('ageChart').getContext('2d');
-        const ageLabels = {!! json_encode($ageDistribution->pluck('age')) !!};
-        const ageData = {!! json_encode($ageDistribution->pluck('count')) !!};
-
-        const greenGradient = ageCtx.createLinearGradient(0, 0, 0, 400);
-        greenGradient.addColorStop(0, '#10b981');
-        greenGradient.addColorStop(1, '#34d399');
-
-        new Chart(ageCtx, {
-            type: 'bar',
-            data: {
-                labels: ageLabels.map(age => age + ' Tahun'),
-                datasets: [{
-                    label: 'Jumlah Pegawai',
-                    data: ageData,
-                    backgroundColor: greenGradient,
-                    borderRadius: 6,
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        cornerRadius: 8
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { precision: 0, color: '#64748b' },
-                        grid: { color: '#f1f5f9', drawBorder: false }
-                    },
-                    x: {
-                        ticks: { color: '#64748b' },
-                        grid: { display: false }
-                    }
-                }
-            }
-        });
-
-        // Education Distribution Chart
-        const eduCtx = document.getElementById('educationChart').getContext('2d');
-        const eduLabels = {!! json_encode($educationDistribution->pluck('pendidikan')) !!};
-        const eduData = {!! json_encode($educationDistribution->pluck('count')) !!};
-
-        const purpleGradient = eduCtx.createLinearGradient(0, 0, 0, 400);
-        purpleGradient.addColorStop(0, '#8b5cf6');
-        purpleGradient.addColorStop(1, '#a78bfa');
-
-        new Chart(eduCtx, {
-            type: 'bar',
-            data: {
-                labels: eduLabels,
-                datasets: [{
-                    label: 'Jumlah Pegawai',
-                    data: eduData,
-                    backgroundColor: purpleGradient,
-                    borderRadius: 6,
-                    borderSkipped: false,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        cornerRadius: 8
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { precision: 0, color: '#64748b' },
-                        grid: { color: '#f1f5f9', drawBorder: false }
-                    },
-                    x: {
-                        ticks: { color: '#64748b' },
-                        grid: { display: false }
-                    }
-                }
-            }
-        });
-    });
-</script>
-@endpush

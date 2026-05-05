@@ -2,24 +2,20 @@
 
 @section('title', 'Data Pegawai')
 
+@section('subtitle')
+<p class="text-base-muted">Kelola semua data pegawai dalam sistem ini.</p>
+@endsection
+
 @section('content')
-<div class="p-8">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-            <h1 class="text-3xl font-bold tracking-tight">Data Pegawai</h1>
-            <p class="text-base-muted">Kelola semua data pegawai dalam sistem ini.</p>
-        </div>
+    <div class="mb-8 flex justify-end">
         <a href="{{ route('admin.pegawai.create') }}" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold bg-primary text-white hover:bg-primary-hover hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-200 transition-all duration-200">
-            <i data-lucide="plus" class="w-5 h-5"></i>
+            <img src="{{ asset('style/assets/img/tambah-icon.png') }}" alt="Dashboard" class="w-5 h-5 object-contain">
             Tambah Pegawai
         </a>
     </div>
 
     @if (session('success'))
         <div class="mb-6 flex items-center gap-4 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-xl shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
-            <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white shrink-0">
-                <i data-lucide="check" class="w-6 h-6"></i>
-            </div>
             <div>
                 <p class="font-bold text-emerald-900">Berhasil!</p>
                 <p class="text-emerald-700 text-sm">{{ session('success') }}</p>
@@ -64,7 +60,7 @@
                                     <a href="{{ route('admin.pegawai.edit', $item->id) }}" 
                                         class="p-2 rounded-lg bg-white border border-base-border text-slate-400 hover:text-primary hover:border-primary hover:bg-indigo-50 transition-all shadow-sm" 
                                         title="Edit">
-                                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                        <img src="{{ asset('style/assets/img/edit-icon.png') }}" alt="Edit" class="w-5 h-5 object-contain">
                                     </a>
                                     <form action="{{ route('admin.pegawai.destroy', $item->id) }}" method="POST" 
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pegawai {{ $item->nama }}?')"
@@ -74,7 +70,7 @@
                                         <button type="submit" 
                                             class="p-2 rounded-lg bg-white border border-base-border text-slate-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-all shadow-sm" 
                                             title="Hapus">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            <img src="{{ asset('style/assets/img/delete-icon.png') }}" alt="Delete" class="w-5 h-5 object-contain">
                                         </button>
                                     </form>
                                 </div>
@@ -85,7 +81,7 @@
                             <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center gap-3">
                                     <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-200">
-                                        <i data-lucide="users" class="w-8 h-8"></i>
+                                        <img src="{{ asset('style/assets/img/empty-employee-icon.png') }}" alt="Empty Employee" class="w-24 h-24 object-contain">
                                     </div>
                                     <p class="text-base-muted font-medium">Belum ada data pegawai.</p>
                                 </div>
@@ -102,6 +98,5 @@
             </div>
         @endif
     </div>
-</div>
 @endsection
 
